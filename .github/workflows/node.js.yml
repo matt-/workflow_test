@@ -8,12 +8,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Get Date
+      id: get-date
+      run: |
+        echo "::set-output name=date::$(/bin/date -u "+%Y:%m:%d:%H:%M" | sed 's/\(....:..:..:..:.\)./\10/')"
+      shell: bash
+    
     - uses: actions/checkout@v2
     - name: Check NPM Cache
       uses: actions/cache@v1.1.2
       with:
         path: ~/.npm
-        key: npm-${{ hashFiles('**/package-lock.json') }}
+        key: npm-${{ steps.get-date.outputs.date }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
          npm-  
     - name: Use Node.js
