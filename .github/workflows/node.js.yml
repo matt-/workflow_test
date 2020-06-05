@@ -24,8 +24,7 @@ jobs:
       with:
         path: ~/.npm
         key: npm-${{ steps.get-date.outputs.date }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-         npm-  
+
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
